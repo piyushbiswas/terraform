@@ -1,0 +1,36 @@
+//commands to remember
+
+
+tf plan -var "username=piysuh biswas"  // to give aguments and run interactively
+
+
+
+//varibale file different use 
+
+tf plan -var-file=devlopment.tfvars
+
+
+
+//to apply only one single resource in a module file
+
+tf apply -target=aws_key_pair.key-tf
+
+
+//to create once again new resource by different name/id not to modify the same resource 
+
+tf taint aws_security_group.allow_tls
+
+
+//to graph a flowchart of terraform file 
+
+tf graph | dot -Tpdf  > graph.pdf
+
+// workspace related commands
+
+tf workspace list
+
+tf workspace show
+
+tf workspace new dev
+
+tf workspace new prod

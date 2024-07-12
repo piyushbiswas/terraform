@@ -1,0 +1,160 @@
+//commands to remember
+
+
+tf plan -var "username=piysuh biswas"  // to give aguments and run interactively
+
+
+
+//varibale file different use 
+
+tf plan -var-file=devlopment.tfvars
+
+
+
+//to apply only one single resource in a module file
+
+tf apply -target=aws_key_pair.key-tf
+
+
+//to create once again new resource by different name/id not to modify the same resource 
+
+tf taint aws_security_group.allow_tls
+
+
+//to graph a flowchart of terraform file 
+
+tf graph | dot -Tpdf  > graph.pdf
+
+
+
+
+##########terraform notes
+
+
+##for variable creating 
+
+variable "username" {
+  default = "piyush"  // if comment this line it will ask you to enter manually username 
+}
+
+output "print-username" {
+  
+  value = "user nasme is -: ${var.username}" // print user name 
+}
+
+
+###if you want to override the given default value in variable  in cmd 
+
+tf plan -var "username=gourav"
+
+
+
+###now define that a user can only enter a integer value only in a variable
+
+variable "username" {
+  default = "piyush"  // if comment this line it will ask you to enter manually username 
+  type = string
+}
+
+
+
+
+####now pass list of inputs by users manually. this will ask you to enter list of username
+
+variable "username" {
+  type = list
+}
+
+output "print-username" {
+  
+  value = "user nasme is -: ${var.username[2]}"
+}
+
+########now use map funtion
+
+variable "userage" {
+  type = map
+  default = {
+    gourav = 20
+    sourav = 25
+  }
+}
+
+variable "username" {
+    type = string
+}
+
+output "print-username" {
+  
+  value = "print user's name ${var.username} age map :---- ${lookup(var.userage,"gourav")}"
+}
+
+#####run this cmd
+
+tf plan -var "username=gourav"
+
+
+
+######now terraform.tfvars file for storing variables in a file . the name of this file have to terraform.tfvars this only
+
+file.tf
+
+variable "userage" {
+  type = number
+}
+variable "username" {
+  type = string
+}
+
+output "print-userage" {
+  
+  value = "age : ${var.username} , user name : ${var.userage}" 
+}
+ 
+
+
+
+terraform.tfvars
+
+username = "chaman"
+userage = 5
+
+
+
+
+
+######now if you want to give different name of tfvars file 
+
+file.tf
+
+variable "userage" {
+  type = number
+}
+variable "username" {
+  type = string
+}
+
+output "print-userage" {
+  
+  value = "age : ${var.username} , user name : ${var.userage}" 
+}
+
+
+
+details.tfvars
+
+userage = 100000
+username = "pullu"
+
+
+
+run cmd#####
+
+tf plan -var-file=details.tfvars
+
+
+#####for using env variable 
+
+export TF_VAR_username=hinal
+
+#####simply export by this cmd type in prefix there will TF_VAR to understand terraform that this is terraform env variable
